@@ -1,0 +1,64 @@
+[root@ip-172-31-20-22 ~]# git clone https://github.com/ashishrpandey/example-voting-app
+Cloning into 'example-voting-app'...
+remote: Enumerating objects: 494, done.
+remote: Total 494 (delta 0), reused 0 (delta 0), pack-reused 494
+Receiving objects: 100% (494/494), 236.17 KiB | 3.94 MiB/s, done.
+Resolving deltas: 100% (179/179), done.
+[root@ip-172-31-20-22 ~]# cd example-voting-app/
+[root@ip-172-31-20-22 example-voting-app]# cd k8s-specifications/
+[root@ip-172-31-20-22 k8s-specifications]# vim result-service.yaml #Updating port as mine is worker instance 
+[root@ip-172-31-20-22 k8s-specifications]# vim vote-service.yaml #Updating port as mine is worker instance 
+[root@ip-172-31-20-22 k8s-specifications]# kubectl apply -f .
+deployment.apps/db created
+service/db created
+deployment.apps/redis created
+service/redis created
+deployment.apps/result created
+service/result created
+deployment.apps/vote created
+service/vote created
+deployment.apps/worker created
+[root@ip-172-31-20-22 k8s-specifications]# kubectl get all
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/db-b54cd94f4-zv67n        1/1     Running   0          2m53s
+pod/redis-868d64d78-qkjt4     1/1     Running   0          2m53s
+pod/result-5d57b59f4b-txst5   1/1     Running   0          2m52s
+pod/vote-94849dc97-j696g      1/1     Running   0          2m52s
+pod/worker-dd46d7584-sddwv    1/1     Running   0          2m52s
+
+NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/db       ClusterIP   10.105.114.244   <none>        5432/TCP         2m53s
+service/redis    ClusterIP   10.105.167.104   <none>        6379/TCP         2m52s
+service/result   NodePort    10.101.48.87     <none>        5001:31002/TCP   2m52s
+service/vote     NodePort    10.101.61.213    <none>        5000:31003/TCP   2m52s
+
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/db       1/1     1            1           2m53s
+deployment.apps/redis    1/1     1            1           2m53s
+deployment.apps/result   1/1     1            1           2m52s
+deployment.apps/vote     1/1     1            1           2m52s
+deployment.apps/worker   1/1     1            1           2m52s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/db-b54cd94f4        1         1         1       2m53s
+replicaset.apps/redis-868d64d78     1         1         1       2m53s
+replicaset.apps/result-5d57b59f4b   1         1         1       2m52s
+replicaset.apps/vote-94849dc97      1         1         1       2m52s
+replicaset.apps/worker-dd46d7584    1         1         1       2m52s
+
+#Deleting pods one by one and confirming
+
+[root@ip-172-31-20-22 k8s-specifications]# kubectl delete pods vote-94849dc97-j696g
+pod "vote-94849dc97-j696g" deleted
+[root@ip-172-31-20-22 k8s-specifications]# kubectl delete pods result-5d57b59f4b-txst5
+pod "result-5d57b59f4b-txst5" deleted
+[root@ip-172-31-20-22 k8s-specifications]# kubectl delete pods  redis-868d64d78-qkjt4
+pod "redis-868d64d78-qkjt4" deleted
+[root@ip-172-31-20-22 k8s-specifications]# kubectl delete pods worker-dd46d7584-sddwv
+pod "worker-dd46d7584-sddwv" deleted
+[root@ip-172-31-20-22 k8s-specifications]# kubectl delete pods db-b54cd94f4-zv67n
+pod "db-b54cd94f4-zv67n" deleted
+
+#Fix applied 
+[root@ip-172-31-20-22 k8s-specifications]# kubectl delete pods result-5d57b59f4b-7gdn2
+pod "result-5d57b59f4b-7gdn2" deleted
