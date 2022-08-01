@@ -1,0 +1,16 @@
+Voting App - http://18.140.62.73:31003/
+Result App - http://18.140.62.73:31002/
+
+Deleting Pods - 
+
+Voting Pod - Both screens working as new pod instance came up immediately 
+Result Pod - Both screens working as new pod instance came up immediately 
+Redis Pod - Both screens working as new pod instance came up immediately 
+Worker Pod - Both screens working as new pod instance came up immediately
+Db Pod -  Both screens working as new pod instance came up immediately, But lost the existing results (Expected) and new results are not coming as we vote. RESTARTS count in 'kubectl get pods' changed to 1 from 0 for worker pod 
+
+Reason for voting stop worked - As db pod is replaced, existing result pod is not able to get data. 
+
+Fix Applied - 
+
+Deleted result pod and app started working (As Result node take data from db intance, which is changed. As Result node is deleted, the new instance is started which takes data from new result node only) 
