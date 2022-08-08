@@ -1,0 +1,7 @@
+#As only one replica is running, safe way to scale it to 2 first and then do rolling upgrade, once upgrade is done, we can scale back to one
+
+kubectl scale rs replica_name --replicas=2   #Scaling to 2 pod 
+kubectl get pods -o wide  #Wait till mew pod is on running state and confirm
+kubectl apply -f new_image.yaml   #applying new images yaml file
+kubectl get pods -o wide #Wait till all pods upgraded and confirm
+kubectl scale rs replica_name --replicas=1
