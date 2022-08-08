@@ -1,0 +1,11 @@
+1. verify port reachabilty via telnet
+
+telenet <ip>:<port>
+
+2. Verify if port is allowed in iptable 
+
+iptables -L  #if its not allowed, update same
+
+3. Get kubernetis logs on respective pods for further analysis
+
+kubectl logs <pod name>
