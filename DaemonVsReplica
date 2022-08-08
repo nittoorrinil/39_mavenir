@@ -1,0 +1,1 @@
+Daemon set is prefered if perfect redundancy is a prority between worker nodes. Here daemon set make sure one pod is running in each worker node at all time, where as replica set make user all the pods are running as per config in the cluster.
